@@ -1,0 +1,318 @@
+.info {
+    margin-top: 30px;
+    text-align: center;
+
+    p {
+        font-weight: 600;
+    }
+}
+
+.modal-footer {
+    display: none;
+}
+
+#divChoices_janeladeentrega {
+    thead {
+        tr {
+            th {
+                border-left: #c9c9c9 solid 1px;
+                //border-bottom: 1px solid #c9c9c9;
+                padding: 0;
+                font-size: 15px;
+
+                .choices-header {
+                    display: grid;
+                    grid-template-rows: 1fr;
+                    grid-template-columns: 1fr 1fr 1fr;
+                    gap: 0;
+                    height: 100%;
+
+                    .choices-header-left-aria {
+                        background-color: #ddd;
+                        grid-row-start: 1;
+                        grid-column-start: 1;
+                        grid-row-end: 2;
+                        grid-column-end: 2;
+
+                        font-weight: bold;
+                        padding: 11px 12px 11px 10px;
+                        text-align: center;
+                    }
+
+                    .choices-header-right-aria {
+                        background-color: #fff;
+                        grid-row-start: 1;
+                        grid-column-start: 2;
+                        grid-row-end: 2;
+                        grid-column-end: 4;
+
+                        font-weight: bold;
+                        padding: 11px 12px 11px 10px;
+                        text-align: center;
+
+                    }
+                }
+            }
+        }
+    }
+
+    tbody {
+        tr {
+            td {
+                padding: 0;
+
+                .table {
+                    tr {
+                        border: 1px solid #ccc;
+
+                        td {
+                            white-space: nowrap;
+                            padding: 10px;
+                            font-size: 13px;
+                            border-top: 0;
+                            background: #fff;
+                            width: 33%;
+                            text-align: center;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    #parent {
+        height: 214px;
+        width: 874px;
+    }
+
+    #fixTable {
+        width: 100% !important;
+
+        tr {
+            td {
+                &:first-child {
+                    padding: 10px !important;
+                    color: #333 !important;
+                    font-weight: 600;
+                    cursor: inherit !important;
+                    float: left;
+                    background: #ddd !important;
+                    width: 173px !important;
+                }
+
+                &.disabledtd {
+                    background: #ddd !important;
+                    cursor: no-drop;
+                    color: #999;
+                }
+
+                &.btnselect {
+                    cursor: pointer;
+
+                    //&:hover {
+                    //    background: #1979c3;
+                    //    color: #fff;
+                    //}
+                }
+
+                &.btnselect.selected {
+                    background: #168800;
+                    color: #fff;
+                }
+            }
+        }
+    }
+
+    .no-slot {
+        font-size: 14px;
+        padding: 20px;
+        text-align: center;
+    }
+}
+
+#divChoices_janeladeentrega.timeslot-row-five {
+    #parent {
+        height: auto;
+    }
+}
+
+#divChoices_janeladeentrega.timeslot-column-three {
+    width: auto;
+
+    thead {
+        tr {
+            th {
+                .choices-header {
+                    .choices-header-right-aria {
+                        width: 516px;
+                    }
+                }
+            }
+        }
+    }
+
+    #parent {
+        width: 690px;
+    }
+}
+
+#divChoices_janeladeentrega.timeslot-column-two {
+    width: auto;
+
+    thead {
+        tr {
+            th {
+                .choices-header {
+                    .choices-header-right-aria {
+                        width: 342px;
+                    }
+                }
+            }
+        }
+    }
+
+    #parent {
+        width: 516px;
+    }
+}
+
+#divChoices_janeladeentrega.timeslot-column-one {
+    width: auto;
+
+    thead {
+        tr {
+            th {
+                .choices-header {
+                    .choices-header-right-aria {
+                        width: 160px;
+                    }
+                }
+            }
+        }
+    }
+
+    #parent {
+        width: 334px;
+    }
+}
+
+@media only screen and (max-width: (@screen__l - 24)) {
+    #divChoices_janeladeentrega {
+        thead {
+            tr {
+                th {
+                    .choices-header {
+                        .choices-header-right-aria {
+                            width: 38px;
+                        }
+                    }
+                }
+            }
+        }
+
+        #parent {
+            width: 740px;
+        }
+    }
+}
+
+@media only screen and (max-width: (@screen__m + 24)) {
+    #divChoices_janeladeentrega {
+        #parent {
+            width: 714px;
+        }
+    }
+}
+
+@media only screen and (max-width: (@screen__m - 1)) {
+    #divChoices_janeladeentrega {
+        width: auto;
+
+        thead {
+            tr {
+                th {
+                    .choices-header {
+                        .choices-header-right-aria {
+                            width: 440px;
+                        }
+                    }
+                }
+            }
+        }
+
+        #parent {
+            width: 608px;
+        }
+    }
+}
+
+@media only screen and (max-width: (@screen__s)) {
+    #divChoices_janeladeentrega {
+        thead {
+            tr {
+                th {
+                    .choices-header {
+                        .choices-header-left-aria {
+                            width: 160px;
+                        }
+
+                        .choices-header-right-aria {
+                            width: 280px;
+                        }
+                    }
+                }
+            }
+        }
+
+        #parent {
+            width: 448px;
+        }
+
+        #fixTable {
+            tr {
+                td {
+                    &:first-child {
+                        width: 140px !important;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: (@screen__xs)) {
+    #divChoices_janeladeentrega {
+        thead {
+            tr {
+                th {
+                    .choices-header {
+                        .choices-header-left-aria {
+                            width: 122px;
+                        }
+
+                        .choices-header-right-aria {
+                            width: 166px;
+                        }
+                    }
+                }
+            }
+        }
+
+        #parent {
+            width: 290px;
+        }
+
+        #fixTable {
+            tr {
+                td {
+                    &:first-child {
+                        width: 100px !important;
+                    }
+
+                }
+            }
+        }
+    }
+}
+
+

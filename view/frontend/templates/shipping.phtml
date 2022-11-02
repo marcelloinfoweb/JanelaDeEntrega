@@ -1,0 +1,151 @@
+<?php
+
+$block = $block->getContent();
+$timeSlot = $block->getTimeSlot();
+
+if ($block->isScheduleShippingEnable() && $block->isScheduleShippingEnableForCustomer()) {
+    $classvar = '';
+    if ($timeSlot['maxtimeslot'] === 1) {
+        $classvar = 'timeslot-column-one';
+    } elseif ($timeSlot['maxtimeslot'] === 2) {
+        $classvar = 'timeslot-column-two';
+    } elseif ($timeSlot['maxtimeslot'] === 3) {
+        $classvar = 'timeslot-column-three';
+    }
+    if (count($timeSlot['timeslot']) < 5) {
+        $classvar .= ' timeslot-row-five';
+    }
+    ?>
+
+    <div id="modal-content" style="display: none" class="responsive-table janela-de-entrega">
+        <table id="divChoices_janeladeentrega" class="<?= $classvar ?> frontend">
+            <thead>
+            <tr>
+                <th>
+                    <div class="choices-header">
+                        <div class="choices-header-left-aria">Data</div>
+                        <div class="choices-header-right-aria title">Janelas de entrega</div>
+                    </div>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>
+                    <div id="parent">
+                        <table id="fixTable" class="table">
+                            <thead>
+                            </thead>
+                            <tbody>
+                            <?php if ($timeSlot['maxtimeslot']) { ?>
+                                <?php foreach ($timeSlot['timeslot'] as $rows) { ?>
+                                    <tr>
+                                        <?php foreach ($rows as $column) { ?>
+                                            <td time="<?= /* @noEscape */
+                                            $column['time'] ?>"
+                                                date="<?= /* @noEscape */
+                                                $column['date'] ?>"
+                                                class="<?= /* @noEscape */
+                                                ($column['is_enabel']) ? 'btnselect' : 'disabledtd' ?>"
+                                                value="<?= /* @noEscape */
+                                                $column['value'] ?>">
+                                                <?= /* @noEscape */
+                                                $column['label'] ?>
+                                            </td>
+                                        <?php } ?>
+                                    </tr>
+                                <?php } ?>
+                            <?php } else { ?>
+                                <div class="no-slot"><?= /* @noEscape */
+                                    __('Sorry, Delivery time not available.') ?></div>
+                            <?php } ?>
+                            </tbody>
+                            <tfoot>
+                            </tfoot>
+                        </table>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <div class="info">
+            <div id="messages">
+                <div class="messages">
+                    <div class="message message-info info">
+                        <div data-ui-id="messages-message-info">
+                            Os horários disponiveis não é necessáriamente garantia de estar disponiveis na conclusão da
+                            compra.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <a id="modal-button" data-mage-init='{"janeladeentrega-modal": {"target": "#modal-content"}}' href="#">
+        <i class="fa fa-calendar" aria-hidden="true"></i><span> <?php echo __('Horários disponíveis') ?></span>
+        <span style="margin: 0 20px;"> | </span>
+    </a>
+
+    <script type="text/javascript">
+        require(['jquery', 'tablesfixer'],
+            function ($) {
+                'use strict'
+                const initMyLib = function () {
+                    if ($('.responsive-table.janela-de-entrega').length) {
+                        const addhour = <?= /* @noEscape */ $block->getTimeslotIntervalHour() ?>;
+                        const date = new Date();
+                        const currenttime = Date.UTC(date.getFullYear()
+                            , date.getMonth()
+                            , date.getDate()
+                            , date.getHours() + addhour
+                            , date.getMinutes()
+                            , date.getSeconds()
+                            , date.getMilliseconds()
+                        );
+                        jQuery("td").filter(function () {
+                            //console.log(jQuery(this).attr("time"));
+                            return ((jQuery(this).attr("time") < currenttime));
+                        }).addClass('disabledtd').removeClass('btnselect');
+
+                        // jQuery("#fixTable").tableHeadFixer({'left': 1});
+
+                        const myObj = <?= /* @noEscape */ $block->getOffDate() ?>;
+                        const starttime = <?= /* @noEscape */ $block->starttime() ?>;
+                        const modifier = starttime['start_time'].split(' ');
+                        const hours = modifier[0].split(':');
+                        let hour = hours[0];
+                        const minute = hours[1];
+                        if (hours[0] === '12') {
+                            hour = '0';
+                        }
+                        if (modifier[1] === 'PM') {
+                            hour = parseInt(hours, 10) + 12;
+                        }
+                        $.each(myObj, function (propName, propVal) {
+                            const dated = propVal.split('-');
+                            const dateoff = new Date(dated[2], dated[0] - 1, dated[1] - 1, hour, minute);
+                            const dateofftime = Date.UTC(dateoff.getFullYear()
+                                , dateoff.getMonth()
+                                , dateoff.getDate()
+                                , dateoff.getHours() + addhour
+                                , dateoff.getMinutes()
+                                , dateoff.getSeconds()
+                                , dateoff.getMilliseconds()
+                            );
+
+                            jQuery("td").filter(function () {
+                                return ((jQuery(this).attr("time") === dateofftime));
+                            }).addClass('disabledtd').removeClass('btnselect');
+                        });
+                    } else {
+                        setTimeout(initMyLib, 2000);
+                    }
+                }
+                initMyLib(); //-> initMyLib is undefined
+            });
+    </script>
+<?php } ?>
+
