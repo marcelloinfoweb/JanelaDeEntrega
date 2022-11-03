@@ -32,11 +32,11 @@ use Magento\Framework\Pricing\Helper\Data;
 class Shipping extends Template
 {
 
-    protected $urlFactory;
-    protected $pageFactory;
-    protected $orderCollectionFactory;
-    protected $customerSession;
-    protected $serialize;
+    protected UrlFactory $urlFactory;
+    protected PageFactory $pageFactory;
+    protected CollectionFactory $orderCollectionFactory;
+    protected Session $customerSession;
+    protected Json $serialize;
 
     /**
      * @ Schedule Shipping is enable or not
@@ -332,7 +332,7 @@ class Shipping extends Template
     /**
      * Off Date
      *
-     * @return Jsonarray
+     * @return bool|string
      */
     public function getOffDate()
     {
@@ -367,7 +367,7 @@ class Shipping extends Template
 
             $diff = date_diff($from_date, $to_date);
 
-            if ($diff->format("%a") == 0) {
+            if ($diff->format("%a") === 0) {
                 $date = date("n-j-Y", strtotime($holiday_date_from . "+0 days"));
                 $_holidaydays[] = $date;
             } elseif ($diff->format("%a") > 0) {
@@ -415,23 +415,18 @@ class Shipping extends Template
         $quotadaylimit = $this->scopeConfig->getValue(self::XML_PATH_STORE_QUOTA_INTERVAL_DAY, $storeScope);
 
 
-        if ($this->getDeliveryType() == 1) {
-            if (isset($quotadaylimit) && !empty($quotadaylimit)) {
+        if ($this->getDeliveryType() === 1 && isset($quotadaylimit) && !empty($quotadaylimit)) {
+            $orders = $this->orderCollectionFactory->create()
+                ->addFieldToSelect(['entity_id', 'delivery_date'])
+                ->addFieldToFilter('delivery_date', ['neq' => 'NULL']);
 
-                $orders = $this->orderCollectionFactory->create()
-                    ->addFieldToSelect(['entity_id', 'delivery_date'])
-                    ->addFieldToFilter('delivery_date', ['neq' => 'NULL']);
-
-                $orders->getSelect()
-                    ->columns('count(entity_id) as ord_num')
-                    ->group('DATE(delivery_date)');
-                foreach ($orders as $order) {
-                    $deliveryDate = $order->getDeliveryDate();
-                    if (isset($deliveryDate) && !empty($deliveryDate)) {
-                        if (intval($quotadaylimit) <= intval($order->getOrdNum())) {
-                            $_holidaydays[] = date("n-j-Y", strtotime($deliveryDate));
-                        }
-                    }
+            $orders->getSelect()
+                ->columns('count(entity_id) as ord_num')
+                ->group('DATE(delivery_date)');
+            foreach ($orders as $order) {
+                $deliveryDate = $order->getDeliveryDate();
+                if (isset($deliveryDate) && !empty($deliveryDate) && intval($quotadaylimit) <= intval($order->getOrdNum())) {
+                    $_holidaydays[] = date("n-j-Y", strtotime($deliveryDate));
                 }
             }
         }
@@ -443,8 +438,7 @@ class Shipping extends Template
             return true;
         }
 
-        $resultJson = json_encode($_holidaydays);
-        return $resultJson;
+        return json_encode($_holidaydays, JSON_THROW_ON_ERROR);
     }
 
     /**
@@ -476,8 +470,8 @@ class Shipping extends Template
     }
 
     /**
-     *
-     * @return Array
+     * @return array|int
+     * @throws \Exception
      */
     public function getTimeSlot()
     {
@@ -595,23 +589,19 @@ class Shipping extends Template
                 /**
                  * Day wise disable
                  */
-                if (!empty($_daytimeslot)) {
-                    if (array_key_exists($_day, $_daytimeslot)) {
-                        if (in_array($_slot['value'], $_daytimeslot[$_day])) {
-                            $_slot['is_enabel'] = 0;
-                        }
-                    }
+                if (!empty($_daytimeslot)
+                    && array_key_exists($_day, $_daytimeslot)
+                    && in_array($_slot['value'], $_daytimeslot[$_day], true)) {
+                    $_slot['is_enabel'] = 0;
                 }
 
                 /**
                  * Date wise disable
                  */
-                if (!empty($_datetimeslot)) {
-                    if (array_key_exists($_date, $_datetimeslot)) {
-                        if (in_array($_slot['value'], $_datetimeslot[$_date])) {
-                            $_slot['is_enabel'] = 0;
-                        }
-                    }
+                if (!empty($_datetimeslot)
+                    && array_key_exists($_date, $_datetimeslot)
+                    && in_array($_slot['value'], $_datetimeslot[$_date], true)) {
+                    $_slot['is_enabel'] = 0;
                 }
 
                 /*

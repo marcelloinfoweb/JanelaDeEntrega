@@ -1,20 +1,20 @@
 {
-  "name": "funarbe/module-janela-de-entrega",
-  "version": "1.0.0",
-  "description": "Modulo para mostrar os horários disponíveis para a entrega da compra em um modal no frontend",
-  "type": "magento2-module",
-  "require": {
-    "magento/framework": "*"
-  },
-  "license": [
-    "Massachusetts Institute of Technology License (MITL)"
-  ],
-  "autoload": {
-    "files": [
-      "registration.php"
+    "name": "funarbe/module-janela-de-entrega",
+    "version": "1.0.0",
+    "description": "Modulo para mostrar os horários disponíveis para a entrega da compra em um modal no frontend",
+    "type": "magento2-module",
+    "require": {
+        "magento/framework": "*"
+    },
+    "license": [
+        "Massachusetts Institute of Technology License (MITL)"
     ],
-    "psr-4": {
-      "Funarbe\\JanelaDeEntrega\\": ""
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "Funarbe\\JanelaDeEntrega\\": ""
+        }
     }
-  }
 }

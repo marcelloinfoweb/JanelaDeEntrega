@@ -17,71 +17,72 @@ if ($block->isScheduleShippingEnable() && $block->isScheduleShippingEnableForCus
     }
     ?>
 
-    <div id="modal-content" style="display: none" class="responsive-table janela-de-entrega">
-        <table id="divChoices_janeladeentrega" class="<?= $classvar ?> frontend">
-            <thead>
-            <tr>
-                <th>
-                    <div class="choices-header">
-                        <div class="choices-header-left-aria">Data</div>
-                        <div class="choices-header-right-aria title">Janelas de entrega</div>
-                    </div>
-                </th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td>
-                    <div id="parent">
-                        <table id="fixTable" class="table">
-                            <thead>
-                            </thead>
-                            <tbody>
-                            <?php if ($timeSlot['maxtimeslot']) { ?>
-                                <?php foreach ($timeSlot['timeslot'] as $rows) { ?>
-                                    <tr>
-                                        <?php foreach ($rows as $column) { ?>
-                                            <td time="<?= /* @noEscape */
-                                            $column['time'] ?>"
-                                                date="<?= /* @noEscape */
-                                                $column['date'] ?>"
-                                                class="<?= /* @noEscape */
-                                                ($column['is_enabel']) ? 'btnselect' : 'disabledtd' ?>"
-                                                value="<?= /* @noEscape */
-                                                $column['value'] ?>">
-                                                <?= /* @noEscape */
-                                                $column['label'] ?>
-                                            </td>
-                                        <?php } ?>
-                                    </tr>
+    <div id="modal-content" style="display: none;" class="responsive-table janela-de-entrega">
+        <div class="modal-inner-content">
+            <table id="divChoices_janeladeentrega" class="<?= $classvar ?> frontend">
+                <thead>
+                <tr>
+                    <th>
+                        <div class="choices-header">
+                            <div class="choices-header-left-aria">Data</div>
+                            <div class="choices-header-right-aria title">Janelas de entrega</div>
+                        </div>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>
+                        <div id="parent">
+                            <table id="fixTable" class="table">
+                                <thead>
+                                </thead>
+                                <tbody>
+                                <?php if ($timeSlot['maxtimeslot']) { ?>
+                                    <?php foreach ($timeSlot['timeslot'] as $rows) { ?>
+                                        <tr>
+                                            <?php foreach ($rows as $column) { ?>
+                                                <td time="<?= /* @noEscape */
+                                                $column['time'] ?>"
+                                                    date="<?= /* @noEscape */
+                                                    $column['date'] ?>"
+                                                    class="<?= /* @noEscape */
+                                                    ($column['is_enabel']) ? 'btnselect' : 'disabledtd' ?>"
+                                                    value="<?= /* @noEscape */
+                                                    $column['value'] ?>">
+                                                    <?= /* @noEscape */
+                                                    $column['label'] ?>
+                                                </td>
+                                            <?php } ?>
+                                        </tr>
+                                    <?php } ?>
+                                <?php } else { ?>
+                                    <div class="no-slot"><?= /* @noEscape */
+                                        __('Sorry, Delivery time not available.') ?></div>
                                 <?php } ?>
-                            <?php } else { ?>
-                                <div class="no-slot"><?= /* @noEscape */
-                                    __('Sorry, Delivery time not available.') ?></div>
-                            <?php } ?>
-                            </tbody>
-                            <tfoot>
-                            </tfoot>
-                        </table>
-                    </div>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+                                </tbody>
+                                <tfoot>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
 
-        <div class="info">
-            <div id="messages">
-                <div class="messages">
-                    <div class="message message-info info">
-                        <div data-ui-id="messages-message-info">
-                            Os horários disponiveis não é necessáriamente garantia de estar disponiveis na conclusão da
-                            compra.
+            <div class="info">
+                <div id="messages">
+                    <div class="messages">
+                        <div class="message message-info info">
+                            <div data-ui-id="messages-message-info">
+                                Os horários de entrega podem variar a medida que compras em andamento forem concluídas.
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
 
+        </div>
     </div>
 
     <a id="modal-button" data-mage-init='{"janeladeentrega-modal": {"target": "#modal-content"}}' href="#">

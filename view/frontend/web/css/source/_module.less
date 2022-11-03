@@ -1,29 +1,22 @@
 .info {
     margin-top: 30px;
     text-align: center;
-
     p {
         font-weight: 600;
     }
-}
-
-.modal-footer {
-    display: none;
 }
 
 #divChoices_janeladeentrega {
     thead {
         tr {
             th {
-                border-left: #c9c9c9 solid 1px;
-                //border-bottom: 1px solid #c9c9c9;
                 padding: 0;
                 font-size: 15px;
 
                 .choices-header {
                     display: grid;
                     grid-template-rows: 1fr;
-                    grid-template-columns: 1fr 1fr 1fr;
+                    grid-template-columns: 1fr 1fr 1fr 1fr;
                     gap: 0;
                     height: 100%;
 
@@ -40,7 +33,7 @@
                     }
 
                     .choices-header-right-aria {
-                        background-color: #fff;
+                        //background-color: #fff;
                         grid-row-start: 1;
                         grid-column-start: 2;
                         grid-row-end: 2;
@@ -48,8 +41,7 @@
 
                         font-weight: bold;
                         padding: 11px 12px 11px 10px;
-                        text-align: center;
-
+                        text-align: right;
                     }
                 }
             }
@@ -71,7 +63,6 @@
                             font-size: 13px;
                             border-top: 0;
                             background: #fff;
-                            width: 33%;
                             text-align: center;
                         }
                     }
@@ -95,9 +86,7 @@
                     color: #333 !important;
                     font-weight: 600;
                     cursor: inherit !important;
-                    float: left;
                     background: #ddd !important;
-                    width: 173px !important;
                 }
 
                 &.disabledtd {
@@ -108,11 +97,6 @@
 
                 &.btnselect {
                     cursor: pointer;
-
-                    //&:hover {
-                    //    background: #1979c3;
-                    //    color: #fff;
-                    //}
                 }
 
                 &.btnselect.selected {
@@ -137,14 +121,14 @@
 }
 
 #divChoices_janeladeentrega.timeslot-column-three {
-    width: auto;
+    width: 100%;
 
     thead {
         tr {
             th {
                 .choices-header {
                     .choices-header-right-aria {
-                        width: 516px;
+                        width: 100%;
                     }
                 }
             }
@@ -152,7 +136,7 @@
     }
 
     #parent {
-        width: 690px;
+        width: 100%;
     }
 }
 
@@ -190,13 +174,34 @@
             }
         }
     }
-
     #parent {
         width: 334px;
     }
 }
 
+@media only screen and (max-width: 767px) {
+    .modal-popup.modal-slide._inner-scroll .modal-inner-wrap {
+        height: 0;
+        min-width: 100%;
+    }
+
+    .modal-popup.modal-slide {
+        left: 0 !important;
+    }
+}
+
+@media only screen and (max-width: (@screen__l)) {
+    .modal-popup .modal-inner-wrap {
+        width: 75% !important;
+    }
+
+    .modal-popup.modal-slide._inner-scroll .modal-inner-wrap {
+        min-height: 0 !important;
+    }
+}
+
 @media only screen and (max-width: (@screen__l - 24)) {
+
     #divChoices_janeladeentrega {
         thead {
             tr {
@@ -209,7 +214,6 @@
                 }
             }
         }
-
         #parent {
             width: 740px;
         }
@@ -247,6 +251,7 @@
 }
 
 @media only screen and (max-width: (@screen__s)) {
+
     #divChoices_janeladeentrega {
         thead {
             tr {
@@ -314,5 +319,3 @@
         }
     }
 }
-
-
